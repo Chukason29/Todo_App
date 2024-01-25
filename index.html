@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <title>TODO APP</title>
+</head>
+<body>
+    <main>
+        <div id="add-task" class="">
+            <button type="button" id="new-task">Add New Task</button>
+            <div id="all-tasks"></div>
+        </div>
+        <div id="task-form" class="hide">
+            <div id="cancel">
+                <p id="x">X</p>
+            </div>
+            <form action="">
+                <label for="title">Title</label>
+                <div>
+                    <input type="text" name="title" id="title" required>
+                </div>
+                <label for="date">Date</label>
+                <div>
+                    <input type="date" name="date" id="date">
+                </div>
+                <label for="description">Description</label>
+                <div>
+                    <textarea name="description" id="description" cols="69" rows="10"></textarea>
+                </div>
+                <button type="submit" id="form-submit">Add Task</button>
+            </form>
+        </div>
+    </main>
+    <script src="./script.js"></script>
+</body>
+</html>
