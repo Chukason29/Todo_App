@@ -25,30 +25,10 @@ const reset = () => {
     currentTask = {}
 }
 
-// Used for toggling the form and task divs
-openTaskFormBtn.addEventListener("click", () => taskForm.classList.toggle("hidden"))
-
-// Used to show the modal for discard or Cancel
-closeTaskFormBtn.addEventListener("click", () => {
-    confirmCloseDialog.showModal()
-})
-
-//used to close the modal created with the dislog element
-cancelBtn.addEventListener("click", () => 
-  confirmCloseDialog.close()
-)
-
-//used to discard changes from the modal
-discardBtn.addEventListener("click", () => {
-    confirmCloseDialog.close()
-    taskForm.classList.toggle("hidden")
-})
-
-taskForm.addEventListener("submit", (e) => {
-    e.preventDefault()
+const addOrUpdateTask = () => {
     //This function checks if a task already exists?
     const dataArrIndex = taskData.findIndex((item) => 
-    item.id === currentTask.id
+        item.id === currentTask.id
     )
     const taskObj = {
         //creating a very unique Id
@@ -60,19 +40,50 @@ taskForm.addEventListener("submit", (e) => {
     if (dataArrIndex === -1) {
         taskData.unshift(taskObj)
     }
-    taskData.forEach(
-        ({ id, title, date, description }) => {
+    updateTaskContainer()
+    reset()
+}
+const updateTaskContainer = () =>{
+    tasksContainer.innerHTML = "";
+    taskData.forEach(({ id, title, date, description }) => {
             (tasksContainer.innerHTML += `
             <div class="task" id="${id}">
-              <p><strong>Title:</strong> ${title}</p>
-              <p><strong>Date:</strong> ${date}</p>
-              <p><strong>Description:</strong> ${description}</p>
-              <button type="button" class="btn">Edit</button>
-              <button type="button" class="btn">Delete</button>
+            <p><strong>Title:</strong> ${title}</p>
+            <p><strong>Date:</strong> ${date}</p>
+            <p><strong>Description:</strong> ${description}</p>
+            <button onclick="editTask(this)" type="button" class="btn">Edit</button>
+            <button onclick="deleteTask(this)" type="button" class="btn">Delete</button> 
             </div>
-          `)
+        `)
         }
-      );
-    
-      reset()
+    );
+}
+// Used for toggling the form and task divs
+openTaskFormBtn.addEventListener("click", () => taskForm.classList.toggle("hidden"))
+
+// Used to show the modal for discard or Cancel
+closeTaskFormBtn.addEventListener("click", () => {
+    // the javaascript tells the variable below to hold any of three values
+    const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
+    if(formInputsContainValues){
+        confirmCloseDialog.showModal();
+    }else{
+        reset()
+    }
+})
+
+//used to close the modal created with the dislog element
+cancelBtn.addEventListener("click", () => 
+  confirmCloseDialog.close()
+)
+
+//used to discard changes from the modal
+discardBtn.addEventListener("click", () => {
+    confirmCloseDialog.close()
+    reset()
+})
+
+taskForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+    addOrUpdateTask()
 })
