@@ -58,6 +58,14 @@ const updateTaskContainer = () =>{
         }
     );
 }
+
+//This function is used in deleting tasks
+const deleteTask = (buttonElement) => {
+    //looking for the id of the parent element inside task data
+    const dataArrIndex = taskData.findIndex((item) => item.id === buttonElement.parentElement.id)
+}
+
+
 // Used for toggling the form and task divs
 openTaskFormBtn.addEventListener("click", () => taskForm.classList.toggle("hidden"))
 
