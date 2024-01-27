@@ -10,8 +10,8 @@ const titleInput = document.getElementById("title-input");
 const descriptionInput = document.getElementById("description-input");
 const dateInput = document.getElementById("date-input");
 
-// This taskData holds all the task objects
-const taskData = []
+// This taskData holds all the task objects or call data from local Storage
+const taskData = JSON.parse(localStorage.getItem("data")) || []
 
 // CurrentTask is used to track a specific object for editing and deleting purpose
 let currentTask = {}
@@ -42,6 +42,8 @@ const addOrUpdateTask = () => {
     }else{
         taskData[dataArrIndex] = taskObj
     }
+    //storing data into local storage
+    localStorage.setItem("data", JSON.stringify(taskData))
     updateTaskContainer()
     reset()
 }
@@ -93,7 +95,8 @@ openTaskFormBtn.addEventListener("click", () => taskForm.classList.toggle("hidde
 closeTaskFormBtn.addEventListener("click", () => {
     // the javaascript tells the variable below to hold any of three values
     const formInputsContainValues = titleInput.value || dateInput.value || descriptionInput.value;
-    if(formInputsContainValues){
+    const formInputValuesUpdated = titleInput.value !==  currentTask.title || dateInput.value !== currentTask.date || descriptionInput.value !== currentTask.description
+    if(formInputsContainValues && formInputValuesUpdated){
         confirmCloseDialog.showModal();
     }else{
         reset()
@@ -115,3 +118,5 @@ taskForm.addEventListener("submit", (e) => {
     e.preventDefault()
     addOrUpdateTask()
 })
+
+updateTaskContainer()
