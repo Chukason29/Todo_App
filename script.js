@@ -39,6 +39,8 @@ const addOrUpdateTask = () => {
     }
     if (dataArrIndex === -1) {
         taskData.unshift(taskObj)
+    }else{
+        taskData[dataArrIndex] = taskObj
     }
     updateTaskContainer()
     reset()
@@ -63,8 +65,26 @@ const updateTaskContainer = () =>{
 const deleteTask = (buttonElement) => {
     //looking for the id of the parent element inside task data
     const dataArrIndex = taskData.findIndex((item) => item.id === buttonElement.parentElement.id)
+    // buttonElement.parentElement.remove()
+    taskData.splice(dataArrIndex, 1)
+    updateTaskContainer()
 }
 
+const editTask = (buttonEl) => {
+    const dataArrIndex = taskData.findIndex(
+    (item) => item.id === buttonEl.parentElement.id
+  );
+
+  currentTask = taskData[dataArrIndex];
+
+  titleInput.value = currentTask.title;
+  dateInput.value = currentTask.date;
+  descriptionInput.value = currentTask.description;
+
+  addOrUpdateTaskBtn.innerText = "Update Task";
+
+  taskForm.classList.toggle("hidden");  
+}
 
 // Used for toggling the form and task divs
 openTaskFormBtn.addEventListener("click", () => taskForm.classList.toggle("hidden"))
